@@ -1,0 +1,12 @@
+{
+    "name": "oknajlehcim/invoice-creator",
+    "require": {
+        "latte/latte": "^2.8"
+    },
+    "authors": [
+        {
+            "name": "Ján Michel",
+            "email": "jan.michel@4memedia.sk"
+        }
+    ]
+}

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="sk_SK">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Faktura č. {$invoice->invoice_number}</title>
+</head>
+<style n:syntax="off">
+    html, body {
+        margin: 0;
+        padding: 0;
+        width:595.28pt;
+        height:841.89pt;
+        max-width: 595.28pt;
+        max-height: 841.89pt;
+        overflow: hidden;
+    }
+    body {
+        margin: 0 !important;
+        padding: 0 !important;
+        font-family: Arial, Helvetica, 'DejaVu Sans', sans-serif;;
+        font-size: 8pt;
+        -webkit-text-size-adjust: 100% !important;
+        -ms-text-size-adjust: 100% !important;
+        -webkit-font-smoothing: antialiased !important;
+    }
+    table *{ font-family: 'DejaVu Sans', sans-serif;}
+    img {
+        border: 0 !important;
+        outline: none !important;
+    }
+    p {
+        Margin: 0px !important;
+        Padding: 0px !important;
+    }
+    table {
+        border-collapse: collapse;
+        mso-table-lspace: 0px;
+        mso-table-rspace: 0px;
+    }
+    td, a, span {
+        border-collapse: collapse;
+        mso-line-height-rule: exactly;
+        text-decoration:none;
+    }
+    .ExternalClass * {
+        line-height: 100%;
+    }
+    .em_defaultlink a {
+        color: inherit !important;
+        text-decoration: none !important;
+    }
+    span.MsoHyperlink {
+        mso-style-priority: 99;
+        color: inherit;
+    }
+    span.MsoHyperlinkFollowed {
+        mso-style-priority: 99;
+        color: inherit;
+    }
+</style>
+<body>
+    <table width="100%" bgcolor="#fff" style="margin:0px auto;" cellspacing="0" cellpadding="0">
+        <tbody>
+            <tr>
+                <td width="100%" style="padding:0 0px">
+                    <table width="100%" style="border-bottom-width:2px;border-bottom-style:dotted;border-bottom-color:#000">
+                        <tr><td width="50%" style="border-right-width:2px;border-right-style:dotted;border-right-color:#000">
+                            <table width="100%"><tbody>
+                                <tr><td style="padding:20px 20px 0">
+                                    <table><tbody>
+                                        <tr><td><div><strong>DODÁVATEĽ:</strong></div></td></tr>
+                                        <tr><td style="padding:5px 0"><div style="font-size:120%">{$invoice->company_data->name}</div></td></tr>
+                                        <tr><td><div>{$invoice->company_data->address}</div></td></tr>
+                                        <tr><td><div>{$invoice->company_data->city}</div></td></tr>
+                                        <tr><td><div>{$invoice->company_data->state}, {$invoice->company_data->zip}</div></td></tr>
+                                        <tr><td><div>{$invoice->company_data->country}</div></td></tr>
+                                    </tbody></table>
+                                </td></tr>
+                                <tr><td style="padding:40px 20px 0 20px">
+                                    <table><tbody>
+                                        <tr><td>IČO:</td><td>{$invoice->company_data->bussines_id}</td></tr>
+                                        <tr><td>DIČ:</td><td>{$invoice->company_data->tax_id}</td></tr>
+                                        <tr><td>IČ DPH:</td><td>{$invoice->company_data->vat_number}</td></tr>
+                                    </tbody></table>
+                                    <table><tbody><tr><td>{@$invoice->company_data->bussines_register}</td></tr></tbody></table>
+                                </td></tr>
+                                <tr><td style="padding:40px 0">
+                                    <table width="100%" style="border-top-width:2px;border-top-style:dotted;border-top-color:#000" cellspacing="0" cellpadding="0"><tbody>
+                                        <tr><td style="padding:40px 20px 0">Ceskoslovenská obchodná banka: 4021569114/7500</td></tr>
+                                        <tr><td style="padding:0 20px">IBAN / SWIFT: SK92 7500 0000 0040 2156 9114 / CEKOSKBX</td></tr>
+                                        <tr><td style="padding:0 20px">Variabilný symbol: {$invoice->invoice_number}</td></tr>
+                                        <tr><td style="padding:0 20px 20px">Forma úhrady: {*$invoice['payment']|translate:name*}</td></tr>
+                                    </tbody></table>
+                                </td></tr>
+                            </tbody></table>
+                        </td><td width="50%" valign="top" style="padding:0;border-left-width:2px;border-left-style:dotted;border-left-color:#000">
+                            <table width="100%"><tbody><tr><td style="padding:20px 40px 50px;border-bottom:2px dotted #000">
+                                <h1 style="margin:0">
+                                    {*if (int)$invoice['state'] === App\Shop\Orders::REFUNDED}Dobropis{else}Faktúra{/if*}
+                                    Faktúra {$invoice->invoice_number}
+                                    {*if (int)$invoice['state'] === App\Shop\Orders::REFUNDED}<small>k faktúre {$invoice['original_number']}</small>{/if*}
+                                </h1>
+                            </td></tr></tbody></table>
+                            <table><tbody><tr><td style="padding:20px 20px 60px 20px;">
+                                <table width="100%"><tbody>
+                                    <tr><td style="padding:20px 0 5px">
+                                        <strong>ODBERATEĽ:</strong>
+                                    </td></tr>
+                                    <tr><td style="padding:10px 0;font-size:120%">
+                                        {*if $invoice['subscriber']['company_name']}
+                                            {$invoice['subscriber']['company_name']}
+                                        {else}
+                                            {$invoice['subscriber']['fname']} {$invoice['subscriber']['lname']}
+                                        {/if*}
+                                    </td></tr>
+                                    {*if !empty($invoice['subscriber']['company_name'])}
+                                        <tr><td>{$invoice['subscriber']['fname']} {$invoice['subscriber']['lname']}</td></tr>
+                                    {/if*}
+                                    <tr><td>{*$invoice['subscriber']['addres_line_1']*}</td></tr>
+                                    <tr><td>{*$invoice['subscriber']['zip']*} {*$invoice['subscriber']['city']*}</td></tr>
+                                    <tr><td>{*$invoice['subscriber']['country']|translate:name*}</td></tr>
+                                </tbody></table>
+                            </td></tr></tbody></table>
+                            <table width="100%" style="border-top-width:2px;border-top-style:dotted;border-top-color:#000"><tbody>
+                                <tr><td style="padding:40px 20px 40px 20px">
+                                    <table width="100%"><tbody>
+                                        <tr><td width="45%">
+                                            <table width="100%"><tbody>
+                                                <tr><td>IČO:</td><td>{*$invoice['subscriber']['ico']*}</td></tr>
+                                                <tr><td>DIČ:</td><td>{*$invoice['subscriber']['dic']*}</td></tr>
+                                                <tr><td>IČ DPH:</td><td>{*$invoice['subscriber']['ic_dph']*}</td></tr>
+                                            </tbody></table>
+                                        </td><td width="55%">
+                                            <table width="100%"><tbody>
+                                                <tr><td>Dátum vystavenia:</td><td>{*date('d.m.Y', strtotime( $invoice['created_at'] ) )*}</td></tr>
+                                                <tr><td>Dátum dodania:</td><td>{*date('d.m.Y', strtotime( $invoice['created_at'] ) )*}</td></tr>
+                                                <tr><td>Dátum splatnosti:</td><td>{*date('d.m.Y', strtotime( "+15 days", strtotime( $invoice['created_at'] ) ))*}</td></tr>
+                                            </tbody></table>
+                                        </td></tr>
+                                    </tbody></table>
+                                </td></tr>
+                            </tbody></table>
+                        </td></tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td><table width="100%"><tbody><tr><td style="padding:0 0px;">
+                    <table width="100%">
+                        <tr><td style="padding:20px 0 0">
+                            <table width="100%" cellspacing="0" cellpadding="0">
+                                <tbody>
+                                    <tr><td style="padding:10px 0px 10px 20px;"><strong>Názov a popis položky</strong></td>
+                                    <td style="padding:10px 0" align="center"><strong>Počet</strong></td>
+                                    <td style="padding:10px 0" align="center"><strong>MJ</strong></td>
+                                    <td style="padding:10px 0;text-align:right" align="right"><strong>Cena / MJ</strong></td>
+                                    <td style="padding:10px 20px 10px 0;text-align:right" align="right"><strong>Celkom</strong></td></tr>
+                                    {*foreach $invoice['products'] as $product}
+                                    <tr{first} style="border-top-width:2px;border-top-style:solid;border-top-color:#000"{/first}>
+                                        <td style="padding:10px 0 10px 20px">{$product|translate:name}</td>
+                                        <td style="padding:10px 0" align="center">{$product['quantity']}</td>
+                                        <td style="padding:10px 0" align="center">ks</td>
+                                        <td style="padding:10px 0" align="right">{whoolPrice( $product['with_tax'] )}</td>
+                                        <td style="padding:10px 20px 10px 0" align="right">{whoolPrice( $product['with_tax'] * $product['quantity'] )}</td>
+                                    </tr>
+                                    {/foreach*}
+                                    {*if isset($invoice['promocodes']) && !empty($invoice['promocodes'])}
+                                    <tr><td style="padding:10px 0 10px 20px">Zľava - Promokód: {$invoice['promocodes']['name']}
+                                        {if $invoice['promocodes']['type'] === 'PERCENTAGE'}
+                                        ({$invoice['promocodes']['value']}%)
+                                        {elseif $invoice['promocodes']['type'] === 'DELIVERY'}
+                                        ({$invoice['promocodes']['value']}%)
+                                        {elseif $invoice['promocodes']['type'] === 'EUR'}
+                                        ({parseFloat($invoice['promocodes']['value']) / 100} EUR)
+                                        {/if}
+                                        </td>
+                                        <td style="padding:10px 0" align="center">1</td>
+                                        <td style="padding:10px 0" align="center">ks</td>
+                                        <td style="padding:10px 0" align="right">{whoolPrice( $invoice['promocodes']['price'] )}</td>
+                                        <td style="padding:10px 20px 10px 0" align="right">{whoolPrice( $invoice['promocodes']['price'] )}</td>
+                                    </tr>
+                                    {/if}
+                                    {if isset($invoice['shipping']) && !empty( $invoice['shipping'] )}
+                                    <tr>
+                                        <td style="padding:10px 0 10px 20px">{$invoice['shipping']|translate:name}</td>
+                                        <td style="padding:10px 0" align="center">1</td>
+                                        <td style="padding:10px 0" align="center">ks</td>
+                                        <td style="padding:10px 0" align="right">{whoolPrice( $invoice['shipping']['price'] )}</td>
+                                        <td style="padding:10px 20px 10px 0" align="right">{whoolPrice( parseFloat( $invoice['shipping']['price'] ) * 1)}</td>
+                                    </tr>
+                                    {/if}
+                                    {if isset($invoice['payment']) && !empty( $invoice['payment'] )}
+                                    <tr style="border-bottom-width:2px;border-bottom-style:solid;border-bottom-color:#000">
+                                        <td style="padding:10px 0 10px 20px">{$invoice['payment']|translate:name}</td>
+                                        <td style="padding:10px 0" align="center">1</td>
+                                        <td style="padding:10px 0" align="center">ks</td>
+                                        <td style="padding:10px 0" align="right">{whoolPrice( $invoice['payment']['price'] )}</td>
+                                        <td style="padding:10px 20px 10px 0" align="right">{whoolPrice( parseFloat( $invoice['payment']['price'] ) * 1)}</td>
+                                    </tr>
+                                    {/if*}
+                                </tbody>
+                            </table>
+                        </td></tr>
+                    </table>
+                </td></tr></tbody></table></td>
+            </tr>
+            <tr>
+                <td style="padding:0 0px;">
+                    <table width="100%" valign="top"><tbody>
+                        <tr>
+                            <td width="50%" valign="top">
+                                <table><tbody>
+                                    <tr><td style="padding:20px 20px 0 20px">Spôsob dodania: {*$invoice['shipping']|translate:name*}</td></tr>
+                                    <tr><td style="padding:0 20px 0 20px">
+                                        Poznámka: {if !@$invoice->company_data->tax_payer || $invoice->company_data->tax_payer === FALSE }Nie s{else}S{/if}me platcami DPH.
+                                    </td></tr>
+                                    {*if isset( $invoice['seller_instructions'] ) && !empty( $invoice['seller_instructions'] )}
+                                    <tr><td style="padding:0 20px 0 20px">
+                                        {$invoice['seller_instructions']}
+                                    </td></tr>
+                                    {/if*}
+                                </tbody></table>
+                            </td>
+                            <td width="50%" style="border-left-width:2px;border-left-style:dotted;border-left-color:#000">
+                                <table width="100%"><tbody>
+                                    <tr><td align="right" style="padding:20px 20px 20px 0;border-bottom-width:2px;border-bottom-style:dotted;border-bottom-color:#000">
+                                        <table width="85%"><tbody><tr><td>
+                                            <h2 style="margin:0"><strong>Celková suma:</strong></h2>
+                                        </td><td align="right" style="text-align:right">
+                                            <h2 style="margin:0"><strong>{$invoice->total()}</strong></h2>
+                                        </td></tr></tbody></table>
+                                    </td></tr>
+                                </tbody></table>
+                                <table><tbody><tr><td>
+                                    <table width="100%"><tbody><tr><td style="padding:20px 20px 100px 20px"><small>Podpis a pečiatka:</small></td></tr></tbody></table>
+                                </td></tr></tbody></table>
+                            </td>
+                        </tr>
+                    </tbody></table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,15 @@
+{
+    "company":{
+        "name": "Fevre River Packet Co, Inc.",
+        "address": "102 San Salvador Ln",
+        "zip": "87501-1740",
+        "city": "Santa Fe",
+        "state": "NM",
+        "country": "USA",
+        "bussines_id": "12345678",
+        "tax_id": "SK1234567891",
+        "vat_number": "SK1234567891",
+        "bussines_register": "",
+        "tax_payer": true
+    }
+}
